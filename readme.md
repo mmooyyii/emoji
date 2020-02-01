@@ -1,7 +1,8 @@
 Emoji
 =====
 
-适用于 Erlang 的一个emoji字典,用于解决emoji在数据库等方面可能储存困难的问题。
+适用于 Erlang 的一个emoji字典,用于解决emoji在数据库等方面可能储存困难的问题。  
+This project was inspired by `carpedm20 <https://github.com/carpedm20/emoji>`__.
 
 
 示例代码
