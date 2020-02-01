@@ -1,0 +1,8 @@
+{application, emoji, [
+    {description, "a emoji dictionary"},
+    {vsn, "v0.0.1"},
+    {registered, [emoji]},
+    {applications, [kernel, stdlib]},
+    {mod, {emoji, []}},
+    {env, []}
+]}.
