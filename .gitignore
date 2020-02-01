@@ -1,0 +1,6 @@
+.idea/
+_build/
+eac.iml
+rebar.lock
+out/
+emoji.iml
