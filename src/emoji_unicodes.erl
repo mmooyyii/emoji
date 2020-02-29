@@ -1,12 +1,12 @@
 -module(emoji_unicodes).
 
 %% API
--export([dict_init/1]).
+-export([dict_init/2]).
 
-dict_init(Ets) ->
-    F = fun(K, V, _) ->
-        ets:insert(Ets, {K, V}),
-        ets:insert(Ets, {V, K})
+dict_init(Ets1, Ets2) ->
+    F = fun(Key, Emoji, _) ->
+        ets:insert(Ets1, {Key, Emoji}),
+        ets:insert(Ets2, {Emoji, Key})
         end,
     maps:fold(F, 0, dict()).
 
