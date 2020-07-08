@@ -53,9 +53,9 @@ demojize(Word) ->
     emoji_ac:decode(to_string(Word)).
 
 print(Binary) when is_binary(Binary) ->
-    io:format("~ts", [Binary]);
+    io:format("~ts~n", [Binary]);
 print(String) when is_list(String) ->
-    io:format("~ts", [list_to_binary(String)]).
+    io:format("~ts~n", [list_to_binary(String)]).
 
 
 to_string(B) when is_binary(B) ->
