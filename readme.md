@@ -5,7 +5,7 @@ Emoji
 This project was inspired by [carpedm20](https://github.com/carpedm20/emoji)
 
 
-示例代码
+Example
 =====
 
 ```
@@ -18,8 +18,3 @@ This project was inspired by [carpedm20](https://github.com/carpedm20/emoji)
     4> emoji:emoji_to_key(<<240,159,165,135>>).
     {<<240,159,165,135>>,<<"1st_place_medal">>}
 ```
-使用jsx:encode()可以再写入文件中可以看到具体的emoji
-
-
-
-
