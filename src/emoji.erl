@@ -18,8 +18,7 @@ start(_, _) ->
         _ ->
             ignore
     end,
-    init_aho_corasick(),
-    {ok, self()}.
+    init_aho_corasick().
 
 stop(_, _) ->
     ets:delete(?Emoji_to_key_dict),
