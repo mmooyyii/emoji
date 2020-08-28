@@ -23,9 +23,8 @@ start(_, _) ->
 stop(_, _) ->
     ets:delete(?Emoji_to_key_dict),
     ets:delete(?key_To_Emoji_dict),
-    gen_server:stop(encoder),
-    gen_server:stop(decoder),
-    ok.
+    supervisor:terminate_child(emoji_sup, emoji_decoder),
+    supervisor:terminate_child(emoji_sup, emoji_encoder).
 
 label_to_emoji(Key) ->
     case ets:lookup(?key_To_Emoji_dict, to_string(Key)) of
@@ -40,8 +39,7 @@ emoji_to_label(Emoji) ->
     end.
 
 init_aho_corasick() ->
-    emoji_ac:start_link(encoder, emoji_unicodes:labels()),
-    emoji_ac:start_link(decoder, emoji_unicodes:emojis()).
+    emoji_sup:start_link().
 
 %% label to emoji
 emojize(Word) ->

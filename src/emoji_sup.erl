@@ -3,10 +3,8 @@
 
 -behaviour(supervisor).
 
-%% API
 -export([start_link/0]).
 
-%% Supervisor callbacks
 -export([init/1]).
 
 -define(SERVER, ?MODULE).
@@ -24,14 +22,14 @@ init([]) ->
         period => 3600},
 
     Encoder = #{id => 'emoji_encoder',
-        start => {'emoji_ac', start_link, [encoder, emoji_unicodes:labels()]},
+        start => {'emoji_ac', start_link, [emoji_encoder, emoji_unicodes:labels()]},
         restart => permanent,
         shutdown => 2000,
         type => worker,
         modules => [emoji_ac]},
 
-    Decoder = #{id => 'emoji_encoder',
-        start => {'emoji_ac', start_link, [encoder, emoji_unicodes:labels()]},
+    Decoder = #{id => 'emoji_decoder',
+        start => {'emoji_ac', start_link, [emoji_decoder, emoji_unicodes:emojis()]},
         restart => permanent,
         shutdown => 2000,
         type => worker,
@@ -42,3 +40,4 @@ init([]) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+

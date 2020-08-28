@@ -20,15 +20,15 @@
 %%%===================================================================
 
 start_link(Name, Words) ->
-    gen_server:start_link({local, Name}, ?MODULE, [Name, aho_corasick:build_tree(Words)], []).
+    gen_server:start_link({local, Name}, ?MODULE, [aho_corasick:build_tree(Words)], []).
 
-init([Name, Aho]) ->
-    {ok, #emoji_ac_state{aho_corasick = Aho, self = Name}}.
+init([Aho]) ->
+    {ok, #emoji_ac_state{aho_corasick = Aho}}.
 
-handle_call({decode, String}, _From, State = #emoji_ac_state{aho_corasick = Aho, self = decoder}) ->
+handle_call({decode, String}, _From, State = #emoji_ac_state{aho_corasick = Aho}) ->
     {reply, aho_corasick:match(String, Aho), State};
 
-handle_call({encode, String}, _From, State = #emoji_ac_state{aho_corasick = Aho, self = encoder}) ->
+handle_call({encode, String}, _From, State = #emoji_ac_state{aho_corasick = Aho}) ->
     {reply, aho_corasick:match(String, Aho), State}.
 
 handle_cast(_Request, State = #emoji_ac_state{}) ->
@@ -48,14 +48,14 @@ code_change(_OldVsn, State = #emoji_ac_state{}, _Extra) ->
 %%%===================================================================
 
 encode(String) ->
-    Labels = lists:sort(gen_server:call(encoder, {encode, String})),
+    Labels = lists:sort(gen_server:call(emoji_encoder, {encode, String})),
     L = lists:map(fun({A, B, C}) ->
         E = emoji:label_to_emoji(lists:sublist(C, 2, length(C) - 2)),
         {A, B, E} end, Labels),
     replace(String, L).
 
 decode(String) ->
-    Emojis = lists:sort(gen_server:call(decoder, {decode, String})),
+    Emojis = lists:sort(gen_server:call(emoji_decoder, {decode, String})),
     E = lists:map(fun({A, B, C}) ->
         L = emoji:emoji_to_label(C),
         {A, B, "{" ++ L ++ "}"} end, Emojis),
